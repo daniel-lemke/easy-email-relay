@@ -1,0 +1,93 @@
+=head1 NAME
+
+Easy Email Relay - easily setup a secure-ish email relay for legacy devices or software
+
+=head1 SYNOPSIS
+
+Currently, only server.pl really does anything. It is planned to get gui.pl
+working too. gui.pl will start a web server that allows for process control
+over the server. Until then, just use server.pl after setting up your config
+files.
+
+There are a couple other scripts that help with development. kill-process is a
+POSIX sh script for finding and killing the gui process when testing. It has
+only been tested on OpenBSD, so it may not hurt to run each part of it manually
+if you are in a GNU-ish environment.
+
+build.bat depends on L<pp|https://metacpan.org/pod/pp> to be installed. This is
+intended for deploying on Windows targets where you don't want to install
+Perl.
+
+Currently, none of these scripts are using any arguments. This will probably
+change in the future, but I skipped it for now due to other constraints.
+
+=head1 DESCRIPTION
+
+Easy Email Relay allows you to support email sending from legacy devices and
+software that otherwise would be unsupported on "modern" mail servers. You don't
+need this software if your device or software supports authentication over SSL 
+or STARTTLS.
+
+=head1 CONFIGURATION
+
+=head2 config.txt
+
+ localhost      IP address of the machine that is running the relay
+ localport      Port the machine running the relay will listen on
+ remotehost     IP address/domain name of the machine that will deliver the mail
+ remoteport     Port of the machine that will deliver the mail
+ sslverify      Verify SSL certificates, use 0 for self signed certs
+ verifyhostname Verify SSL certificate hostname
+ debug          Print SMTP debug information
+ timeout        How many seconds to wait for the remote server before disconnect
+ logfile        A file this software will write log messages to
+ authwithdomain Use 1 unless your remote mail server auths with username only
+
+=head2 allowed_to.txt
+
+This is simply a list of email addresses, one per line, that this relay will be
+allowed to send to.
+
+=head2 allowed_from.txt
+
+This is a list of email addresses that can use the relay to send mail. The 
+format is:
+
+ email@my.domain    secret/password     ip address that is allowed to send
+
+The IP address should be bare IP only, no subnet or CIDR notation. For example:
+
+ monitoring@my.domain   password123     192.168.1.3
+
+=head1 CAVEATS
+
+This software is still in development. Audit the code before using to make sure
+I didn't make any oopsies you are going to deploy in a production environment.
+
+IPv6 has not been tested at all. It probably doesn't work, assume that it 
+doesn't.
+
+=head1 AUTHOR
+
+Daniel Lemke <dlemke@taklesoftware.com>
+
+=head1 COPYRIGHT
+
+Copyright 2022 Daniel J. Lemke <dlemke@taklesoftware.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of 
+this software and associated documentation files (the "Software"), to deal in 
+the Software without restriction, including without limitation the rights to 
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so, 
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS 
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER 
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

@@ -1,0 +1,4 @@
+#!/bin/sh
+# Copyright 2022 Daniel J. Lemke <dlemke@taklesoftware.com>
+# This software is licensed under the MIT License. See LICENSE for details.
+kill `ps aux | grep "perl gui\.pl" | sed "s/ \+/\t/g" | cut -f2`

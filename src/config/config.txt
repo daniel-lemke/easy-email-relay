@@ -1,0 +1,10 @@
+localhost	127.0.0.1
+localport	25
+remotehost	mail.my.domain
+remoteport	587
+sslverify	1
+verifyhostname	1
+debug		1
+timeout		30
+logfile		log.txt
+authwithdomain  0
